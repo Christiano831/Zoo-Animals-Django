@@ -1,6 +1,6 @@
 import re
-from django.shortcuts import render
-
+from django.shortcuts import render, redirect
+from .forms import MedicationForm
 from .models import Animal
 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -24,7 +24,19 @@ def animals_index(request):
 
 def info(request, animal_id):
   animal = Animal.objects.get(id=animal_id)
-  return render(request, 'animals/info.html', {'animal': animal})
+  medication_form = MedicationForm()
+  return render(request, 'animals/info.html', {
+    'animal': animal, 
+    'medication_form': medication_form
+  })
+
+def add_medication(request, animal_id):
+  form = MedicationForm(request.POST)
+  if form.is_valid():
+    new_medication = form.save(commit=False)
+    new_medication.animal_id = animal_id
+    new_medication.save()
+  return redirect('info', animal_id=animal_id)
 
 class AnimalUpdate(UpdateView):
   model = Animal
