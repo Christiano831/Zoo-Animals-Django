@@ -40,7 +40,7 @@ def add_medication(request, animal_id):
 
 class AnimalUpdate(UpdateView):
   model = Animal
-  fields = ['name', 'species', 'gender', 'age']
+  fields = ['name', 'species', 'gender', 'age', 'needs_meds']
 
 class AnimalDelete(DeleteView):
   model = Animal

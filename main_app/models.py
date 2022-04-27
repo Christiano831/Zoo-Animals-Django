@@ -7,6 +7,11 @@ class Animal(models.Model):
 	species = models.CharField(max_length=100)
 	gender = models.CharField(max_length=250)
 	age = models.IntegerField()
+	needs_meds = models.BooleanField(default=False)
+	def __str__(self):
+		return self.name
+	def get_absolute_url(self):
+		return reverse('info', kwargs={'animal_id': self.id})
 
 class Medication(models.Model):
 	date = models.DateField('Administration date')
@@ -15,9 +20,5 @@ class Medication(models.Model):
 
 	class Meta:
 		ordering = ['-date']
-
-def __str__(self):
-        return self.name
-
-def get_absolute_url(self):
-	return reverse('info', kwargs={'animal_id': self.id})
+	def __str__(self):
+		return self.animal, self.med, self.date
