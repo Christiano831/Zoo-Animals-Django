@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Zookeepers List</h1>
+
+{% for zookeeper in zookeepers %}
+  <a href="{% url 'zookeeper_info' zookeeper.id %}">
+    <div class="card">
+        <div class="card-content">
+            <span class="card-title">{{ zookeeper.name }}</span>
+            <p>Position: {{ zookeeper.position }}</p>
+        </div>
+    </div>
+  </a>
+{% endfor %}
+
+{% endblock %}

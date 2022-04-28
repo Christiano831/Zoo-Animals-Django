@@ -2,12 +2,21 @@ from django.db import models
 from django.urls import reverse
 
 # Create your models here.
+class Zookeeper(models.Model):
+	name = models.CharField(max_length=50)
+	position = models.CharField(max_length=50)
+	def __str__(self):
+		return self.name
+	def get_absolute_url(self):
+		return reverse('zookeeper_info', kwargs={'zookeeper_id': self.id})
+	
 class Animal(models.Model):
 	name = models.CharField(max_length=100)
 	species = models.CharField(max_length=100)
 	gender = models.CharField(max_length=250)
 	age = models.IntegerField()
-	needs_meds = models.BooleanField(default=False)
+	needs_meds = models.BooleanField(null=False)
+	zookeepers = models.ManyToManyField(Zookeeper)
 	def __str__(self):
 		return self.name
 	def get_absolute_url(self):
